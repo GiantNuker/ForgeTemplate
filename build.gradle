@@ -18,7 +18,7 @@ apply plugin: 'com.github.johnrengelman.shadow'
 
 
 version = '1.0'
-group = 'com.example.examplemod' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = 'io.github.giantnuker.example' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = project.modid
 
 sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
@@ -121,6 +121,6 @@ logger.lifecycle("""
 	${project.modname} (${project.modid})
 
 	Version: ${project.version}
-	Minecraft Version: ${project.mcversion}
+	Minecraft Version: ${project.minecraft.version}
 	=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 """)
