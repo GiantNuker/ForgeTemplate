@@ -19,7 +19,7 @@ apply plugin: 'com.github.johnrengelman.shadow'
 
 version = '1.0'
 group = 'com.example.examplemod' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'examplemod'
+archivesBaseName = project.modid
 
 sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 compileJava {
@@ -29,7 +29,7 @@ compileJava {
 minecraft {
     version = '1.12.2-14.23.5.2847'
     runDir = 'run'
-    coreMod = 'com.example.examplemod.ExampleModLoadingPlugin'
+    coreMod = 'io.github.giantnuker.example.ExampleModLoadingPlugin'
     // the mappings can be changed at any time, and must be in the following format.
     // snapshot_YYYYMMDD   snapshot are built nightly.
     // stable_#            stables are built at the discretion of the MCP team.
@@ -41,7 +41,7 @@ minecraft {
 
 jar.manifest.attributes(
         'FMLCorePluginContainsFMLMod': true,
-        'FMLCorePlugin': 'com.example.examplemod.ExampleModLoadingPlugin',
+        'FMLCorePlugin': 'io.github.giantnuker.example.ExampleModLoadingPlugin',
         'ForceLoadAsMod': true,
         'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker'
 )
@@ -77,7 +77,7 @@ dependencies {
 }
 
 mixin {
-    add sourceSets.main, 'mixins.examplemod.refmap.json'
+    add sourceSets.main, "mixins.${project.modid}.refmap.json"
 }
 
 shadowJar {
@@ -99,13 +99,15 @@ processResources {
     // this will ensure that this task is redone when the versions change.
     inputs.property 'version', project.version
     inputs.property 'mcversion', project.minecraft.version
+    inputs.property 'modid', project.modid
+    inputs.property 'modname', project.modname
 
     // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
                 
         // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+        expand 'version':project.version, 'mcversion':project.minecraft.version, 'modid':project.modid, 'modname':project.modname
     }
         
     // copy everything else except the mcmod.info
@@ -113,3 +115,12 @@ processResources {
         exclude 'mcmod.info'
     }
 }
+
+logger.lifecycle("""
+	=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+	${project.modname} (${project.modid})
+
+	Version: ${project.version}
+	Minecraft Version: ${project.mcversion}
+	=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+""")

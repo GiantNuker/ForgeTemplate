@@ -1,4 +1,4 @@
-package com.example.examplemod;
+package io.github.giantnuker.example;
 
 import net.minecraft.init.Blocks;
 import net.minecraftforge.fml.common.Mod;
@@ -10,7 +10,7 @@ import org.apache.logging.log4j.Logger;
 @Mod(modid = ExampleMod.MODID, name = ExampleMod.NAME, version = ExampleMod.VERSION)
 public class ExampleMod
 {
-    public static final String MODID = "examplemod";
+    public static final String MODID = "example";
     public static final String NAME = "Example Mod";
     public static final String VERSION = "1.0";
 
@@ -25,7 +25,6 @@ public class ExampleMod
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-        // some example code
-        logger.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+
     }
 }
